@@ -106,6 +106,5 @@
         }
       }
     }
-  },
-  "defaultProject": "indexed-db-sound-file"
+  }
 }
