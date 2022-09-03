@@ -71,10 +71,11 @@ export class AudioReaderComponent {
 
   private async addAudioFile(file: File) {
     try {
-      const key = this.audioFileDbService.addRecord(file);
+      const key = await this.audioFileDbService.addRecord(file);
       this.writeLog(`addAudioFiles: ${key}個目: 成功`);
     } catch (error) {
       this.writeLog(`error: ${error}`);
+      throw error;
     }
   }
 
@@ -92,7 +93,15 @@ export class AudioReaderComponent {
       this.writeLog(`deleteAudioFile: ${id}個目: 成功`);
     } catch (error) {
       this.writeLog(`error: ${error}`);
+      throw error;
     }
+  }
+
+  getTotalFileCount() {
+    if (!this.audioFiles) {
+      return 0;
+    }
+    return this.audioFiles.length;
   }
 
   getTotalFileSize() {
@@ -102,7 +111,7 @@ export class AudioReaderComponent {
     const totalFileSize = this.audioFiles.reduce(function (sum, element) {
       return sum + element.file.size;
     }, 0);
-    return totalFileSize / 1024 / 1024 / 1024;
+    return totalFileSize / 1000 / 1000 / 1000;
   }
 
   trackByItem(_: number, audioFile: AudioFileItem) {

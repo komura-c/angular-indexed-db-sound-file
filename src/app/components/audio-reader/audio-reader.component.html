@@ -19,10 +19,11 @@
     <button class="button" (click)="onDeleteAudioFiles()">全て削除する</button>
   </div>
   <div class="item">
+    <p>総ファイル数: {{ getTotalFileCount() | number }}</p>
     <p>総ファイルサイズ: {{ getTotalFileSize() | number }}GB</p>
   </div>
   <div class="item">
-    <div class="audio-log">{{ audioLog }}</div>
+    <textarea rows="15" cols="80" readonly>{{ audioLog }}</textarea>
   </div>
 
   <div class="item">
