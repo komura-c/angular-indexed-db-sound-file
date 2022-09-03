@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { IndexedDbService } from './indexed-db.service';
+import { AudioFileDbService } from './audio-file-db.service';
 
-describe('IndexedDbService', () => {
-  let service: IndexedDbService;
+describe('AudioFileDbService', () => {
+  let service: AudioFileDbService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(IndexedDbService);
+    service = TestBed.inject(AudioFileDbService);
   });
 
   it('should be created', () => {

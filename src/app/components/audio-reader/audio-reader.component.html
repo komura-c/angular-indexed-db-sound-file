@@ -1,1 +1,52 @@
-<p>audio-reader works!</p>
+<div class="audio-reader">
+  <h1>
+    IndexedDB(Dexie.js)を使ってブラウザに保存できる音声ファイルサイズテスト
+  </h1>
+
+  <div class="item">
+    <input
+      type="file"
+      accept="audio/*"
+      (change)="onChangeAudioFileInput($event)"
+    />
+  </div>
+  <div class="item">
+    <span>保存する数：</span>
+    <input autocomplete="off" type="number" [(ngModel)]="maxSaveFileCount" />
+  </div>
+  <div class="item">
+    <button class="button" (click)="onAddAudioFiles()">保存する</button>
+    <button class="button" (click)="onDeleteAudioFiles()">全て削除する</button>
+  </div>
+  <div class="item">
+    <p>総ファイルサイズ: {{ getTotalFileSize() | number }}GB</p>
+  </div>
+  <div class="item">
+    <div class="audio-log">{{ audioLog }}</div>
+  </div>
+
+  <div class="item">
+    <button
+      class="button"
+      *ngIf="!isLoadAudioFile"
+      (click)="isLoadAudioFile = true"
+    >
+      オーディオファイルを読み込む
+    </button>
+  </div>
+  <ul *ngIf="isLoadAudioFile">
+    <li *ngFor="let item of audioFiles; trackBy: trackByItem">
+      <div *ngIf="item.file; else noFile">
+        <p>{{ item.file.name }}</p>
+        <audio
+          *ngIf="item.objectURL"
+          controls
+          [src]="item.objectURL | safeUrl"
+        ></audio>
+      </div>
+      <ng-template #noFile>
+        <div>no file</div>
+      </ng-template>
+    </li>
+  </ul>
+</div>
