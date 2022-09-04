@@ -45,9 +45,19 @@ export class AudioReaderComponent {
 
   private setObjectURL(audioFiles: AudioFileItem[]) {
     return audioFiles.map((audioFile) => {
-      if (!audioFile.objectURL) {
+      /* 初回 */
+      if (!this.audioFiles) {
         audioFile.objectURL = window.URL.createObjectURL(audioFile.file);
         return audioFile;
+      }
+      /* 2回目以降 */
+      const isOrgFound = this.audioFiles.find(
+        (audioFileItem) => audioFileItem.id === audioFile.id
+      );
+      if (isOrgFound && isOrgFound.objectURL) {
+        audioFile.objectURL = isOrgFound.objectURL;
+      } else {
+        audioFile.objectURL = window.URL.createObjectURL(audioFile.file);
       }
       return audioFile;
     });
